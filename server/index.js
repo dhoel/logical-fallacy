@@ -3,10 +3,15 @@ const express = require('express');
 const passport = require('passport');
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
 const BearerStrategy = require('passport-http-bearer').Strategy;
+const mongoose = require('mongoose');
+const User = require('./models')
+mongoose.Promise = global.Promise;
+
 
 let secret = {
   CLIENT_ID: process.env.CLIENT_ID,
-  CLIENT_SECRET: process.env.CLIENT_SECRET
+  CLIENT_SECRET: process.env.CLIENT_SECRET,
+  DATABASE_URL: process.env.DATABASE_URL
 }
 
 if(process.env.NODE_ENV != 'production') {
@@ -14,9 +19,6 @@ if(process.env.NODE_ENV != 'production') {
 }
 
 const app = express();
-
-const database = {
-};
 
 app.use(passport.initialize());
 
@@ -27,28 +29,40 @@ passport.use(
         callbackURL: `/api/auth/google/callback`
     },
     (accessToken, refreshToken, profile, cb) => {
-        // Job 1: Set up Mongo/Mongoose, create a User model which store the
-        // google id, and the access token
-        // Job 2: Update this callback to either update or create the user
-        // so it contains the correct access token
-        const user = database[accessToken] = {
-            googleId: profile.id,
-            accessToken: accessToken
-        };
-        return cb(null, user);
-    }
+        User
+            .create({
+                googleId: profile.id,
+                accessToken: accessToken
+            })
+            .then(user => {
+                return cb(null, user);
+            })
+            .catch(err => {
+                return cb(err);
+            })
+        }
 ));
 
 passport.use(
     new BearerStrategy(
         (token, done) => {
-            // Job 3: Update this callback to try to find a user with a
-            // matching access token.  If they exist, let em in, if not,
-            // don't.
-            if (!(token in database)) {
-                return done(null, false);
-            }
-            return done(null, database[token]);
+            User
+             .find({token})
+             .exec()
+             .then(token => {
+                 //console.log(token)
+                 if(!token) {
+                     return done(null, false);
+                 }
+                 return done(null, token);
+             })
+             .catch(err => {
+                 return cb(err);
+             })
+            // if (!(token in database)) {
+            //     return done(null, false);
+            // }
+            // return done(null, database[token]);
         }
     )
 );
@@ -96,23 +110,35 @@ app.get(/^(?!\/api(\/|$))/, (req, res) => {
 });
 
 let server;
-function runServer(port=3001) {
+function runServer(port=3001, databaseUrl=secret.DATABASE_URL) {
     return new Promise((resolve, reject) => {
-        server = app.listen(port, () => {
-            resolve();
-        }).on('error', reject);
+        mongoose.connect(databaseUrl, err => {
+            if (err) {
+                return reject(err);
+            }
+
+            server = app.listen(port, () => {
+                resolve();
+            }).on('error', err => {
+                mongoose.disconnect();
+                reject(err);
+             });
+        });
     });
 }
 
 function closeServer() {
-    return new Promise((resolve, reject) => {
-        server.close(err => {
-            if (err) {
-                return reject(err);
-            }
-            resolve();
-        });
-    });
+  return mongoose.disconnect().then(() => {
+     return new Promise((resolve, reject) => {
+       console.log('Closing server');
+       server.close(err => {
+           if (err) {
+               return reject(err);
+           }
+           resolve();
+       });
+     });
+  });
 }
 
 if (require.main === module) {
