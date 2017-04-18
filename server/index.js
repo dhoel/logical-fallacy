@@ -29,8 +29,10 @@ passport.use(
         callbackURL: `/api/auth/google/callback`
     },
     (accessToken, refreshToken, profile, cb) => {
+        console.log(profile);
         User
             .create({
+                userName: profile.name.givenName,
                 googleId: profile.id,
                 accessToken: accessToken
             })
@@ -59,10 +61,7 @@ passport.use(
              .catch(err => {
                  return cb(err);
              })
-            // if (!(token in database)) {
-            //     return done(null, false);
-            // }
-            // return done(null, database[token]);
+
         }
     )
 );
