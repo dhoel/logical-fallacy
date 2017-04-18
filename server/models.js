@@ -2,11 +2,21 @@ const mongoose = require('mongoose');
 mongoose.Promise = global.Promise;
 
 const userSchema = mongoose.Schema({
-    "userName": String,
-    "googleId": {type:String, required:true},
-    "accessToken": {type:String, required:true},
+    userName: String,
+    googleId: {type:String, required:true},
+    accessToken: {type:String, required:true}
 });
 
-const User = mongoose.model('User', userSchema);
+const questionSchema = mongoose.Schema({
+    definition: {type:String, required:true},
+    fallacy: {type:String, required:true}
+})
 
-module.exports = User;
+userSchema.method.apiRepr = function() {
+    return this.userName;
+}
+
+const User = mongoose.model('User', userSchema);
+const Question = mongoose.model('Question', questionSchema);
+
+module.exports = {User, Question};

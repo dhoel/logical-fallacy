@@ -5,7 +5,10 @@ export default class QuestionPage extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            questions: []
+            question: {
+                _id: '',
+                definition: ''
+            }
         };
     }
 
@@ -20,22 +23,22 @@ export default class QuestionPage extends React.Component {
                 throw new Error(res.statusText);
             }
             return res.json();
-        }).then(questions =>
+        }).then(question =>
             this.setState({
-                questions
+                question
             })
         );
     }
 
     render() {
-        const questions = this.state.questions.map((question, index) =>
-            <li key={index}>{question}</li>
-        );
+        //console.log(this.state.question.definition)
+        const question = this.state.question.definition;
+
 
         return (
-            <ul className="question-list">
-                {questions}
-            </ul>
+            <div className="question">
+                {question}
+            </div>
         );
     }
 }

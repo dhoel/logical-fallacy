@@ -4,7 +4,7 @@ const passport = require('passport');
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
 const BearerStrategy = require('passport-http-bearer').Strategy;
 const mongoose = require('mongoose');
-const User = require('./models')
+const {User, Question} = require('./models')
 mongoose.Promise = global.Promise;
 
 
@@ -29,7 +29,7 @@ passport.use(
         callbackURL: `/api/auth/google/callback`
     },
     (accessToken, refreshToken, profile, cb) => {
-        console.log(profile);
+
         User
             .create({
                 userName: profile.name.givenName,
@@ -95,7 +95,19 @@ app.get('/api/me',
 
 app.get('/api/questions',
     passport.authenticate('bearer', {session: false}),
-    (req, res) => res.json(['Question 1', 'Question 2'])
+    (req, res) => {
+        Question
+            .findOne()
+            .exec()
+            .then(question => {
+                //let {_id, definition} = question
+                res.status(201).json(question);
+            })
+            .catch(err => {
+                res.status(500).json({message: "Internal server error"})
+                console.error(err)
+            })
+    }
 );
 
 // Serve the built client
