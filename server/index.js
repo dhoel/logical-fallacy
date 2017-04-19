@@ -97,11 +97,14 @@ app.get('/api/questions',
     passport.authenticate('bearer', {session: false}),
     (req, res) => {
         Question
-            .findOne()
+            .find()
             .exec()
             .then(question => {
-                //let {_id, definition} = question
-                res.status(201).json(question);
+                const {_id, definition} = question[0];
+                console.log(_id, definition);
+                res.status(201).json({id:_id, definition:definition});
+
+
             })
             .catch(err => {
                 res.status(500).json({message: "Internal server error"})
