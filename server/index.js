@@ -53,14 +53,13 @@ passport.use(
     new BearerStrategy(
         (token, done) => {
             User
-             .find({token})
+             .findOne({accessToken: token})
              .exec()
-             .then(token => {
-                 //console.log(token)
-                 if(!token) {
+             .then( user => {
+                 if(!user) {
                      return done(null, false);
                  }
-                 return done(null, token);
+                 return done(null, user);
              })
              .catch(err => {
                  return cb(err);
@@ -92,9 +91,9 @@ app.get('/api/auth/logout', (req, res) => {
 
 app.get('/api/me',
     passport.authenticate('bearer', {session: false}),
-    (req, res) => res.json({
-        googleId: req.user.googleId
-    })
+    (req, res) => {
+        res.json(req.user.userName)
+    }
 
 );
 
@@ -136,14 +135,9 @@ app.put('/api/questions/:id', jsonParser,
                     isCorrect = true
                     res.json(isCorrect)
                 }
-                
+
             })
 })
-// app.put('/api/questions/:id')
-//    did they get it right?
-//    modify the currentQuestion
-//    send a response
-//      correct/incorrect
 
 // Serve the built client
 app.use(express.static(path.resolve(__dirname, '../client/build')));

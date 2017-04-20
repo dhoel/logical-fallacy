@@ -28,9 +28,12 @@ export class QuestionPage extends React.Component {
 
         return (
             <div>
+                <div className='user'>
+                    <h3>{this.props.currentUser}</h3>
+                </div>
                 <div className='total-correct'>
-                    <span>Total: {this.props.totalQs}&nbsp;
-                          Correct: {this.props.correctQs}</span>
+                    <span>Total: {this.props.totalQs}</span>
+                    <span>Correct: {this.props.correctQs}</span>
                 </div>
                 <div className='question'>
                     {question}
@@ -52,6 +55,7 @@ export class QuestionPage extends React.Component {
 }
 
 const mapStateToProps = (state, props) => ({
+    currentUser: state.currentUser,
     definition: state.definition,
     id: state.id,
     isCorrect: state.isCorrect,
