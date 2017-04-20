@@ -18,7 +18,7 @@ export class App extends React.Component {
 }
 
     render() {
-        console.log(this.props.currentUser)
+        
         if (!this.props.currentUser) {
             return <LoginPage />;
         }

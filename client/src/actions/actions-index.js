@@ -24,6 +24,12 @@ export const fetchQuestionFailure = error => ({
     question: error
 })
 
+export const SUBMIT_ANSWER_SUCCESS = 'SUBMIT_ANSWER_SUCCESS';
+export const submitAnswerSuccess = data => ({
+    type: SUBMIT_ANSWER_SUCCESS,
+    isCorrect: data
+})
+
 export const validateUser = () => dispatch => {
     const accessToken = Cookies.get('accessToken');
     if (accessToken) {
@@ -43,7 +49,6 @@ export const validateUser = () => dispatch => {
             }
             return res.json();
         }).then(currentUser => {
-            console.log('user: ' + currentUser)
             dispatch(validateUserSuccess(currentUser))
         })
     }
@@ -60,10 +65,30 @@ export const fetchQuestion = () => dispatch => {
             throw new Error(res.statusText);
         }
         return res.json();
-    }).then(question => {
+    })
+    .then(question => {
         dispatch(fetchQuestionSuccess(question));
     })
     .catch(error => {
         dispatch(fetchQuestionFailure(error));
     })
+}
+
+export const submitAnswer = (answerData) => dispatch => {
+    console.log(answerData)
+    return fetch(`/api/questions/${answerData.qID}`,
+        {
+            headers: new Headers({ 'Content-Type': 'application/json' }),
+            method: 'PUT',
+            body: JSON.stringify(answerData)
+        })
+        .then(res => {
+            if (!res.ok) {
+                throw new Error(res.statusText);
+            }
+            return res.json();
+        })
+        .then(isCorrect => {
+            dispatch(submitAnswerSuccess(isCorrect));
+        })
 }

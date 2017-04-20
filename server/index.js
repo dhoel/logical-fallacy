@@ -116,7 +116,18 @@ app.get('/api/questions',
     }
 );
 
+app.put('/api/questions/:id', (req, res) => {
+    console.log(req.params.id)
+    console.log(req.body)
+    Question
+        .findById(req.params.id)
+        .exec()
+        .then(question => {
+            res.json(question)
+            console.log(question)
+        })
 
+})
 // app.put('/api/questions/:id')
 //    did they get it right?
 //    modify the currentQuestion
