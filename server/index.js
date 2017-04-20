@@ -4,7 +4,11 @@ const passport = require('passport');
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
 const BearerStrategy = require('passport-http-bearer').Strategy;
 const mongoose = require('mongoose');
-const {User, Question} = require('./models')
+const {User, Question} = require('./models');
+const bodyParser = require('body-parser');
+
+const jsonParser = bodyParser.json();
+
 mongoose.Promise = global.Promise;
 
 
@@ -104,7 +108,7 @@ app.get('/api/questions',
             .find()
             .exec()
             .then(question => {
-                const {_id, definition} = question[0];
+                const {_id, definition} = question[currentQuestion];
                 res.status(201).json({id:_id, definition:definition});
 
 
@@ -116,17 +120,24 @@ app.get('/api/questions',
     }
 );
 
-app.put('/api/questions/:id', (req, res) => {
-    console.log(req.params.id)
-    console.log(req.body)
-    Question
-        .findById(req.params.id)
-        .exec()
-        .then(question => {
-            res.json(question)
-            console.log(question)
-        })
-
+app.put('/api/questions/:id', jsonParser,
+    passport.authenticate('bearer', {session: false}),
+    (req, res) => {
+        currentQuestion++
+        let isCorrect = false
+        Question
+            .findById(req.params.id)
+            .exec()
+            .then(question => {
+                if (req.body.answer !== question.fallacy) {
+                res.json(isCorrect)
+                }
+                else {
+                    isCorrect = true
+                    res.json(isCorrect)
+                }
+                
+            })
 })
 // app.put('/api/questions/:id')
 //    did they get it right?

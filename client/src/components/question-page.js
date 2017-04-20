@@ -16,17 +16,22 @@ export class QuestionPage extends React.Component {
         e.preventDefault();
         let answerData = {
             qID: this.props.id,
-            answer: this.answer.value
+            answer: this.answer.value.toLowerCase()
         }
-
-        this.props.dispatch(actions.submitAnswer(answerData));
+        this.props.dispatch(actions.validateAnswer(answerData))
+        this.props.dispatch(actions.fetchQuestion())
     }
 
     render() {
+
         const question = this.props.definition;
 
         return (
             <div>
+                <div className='total-correct'>
+                    <span>Total: {this.props.totalQs}&nbsp;
+                          Correct: {this.props.correctQs}</span>
+                </div>
                 <div className='question'>
                     {question}
                 </div>
@@ -48,7 +53,10 @@ export class QuestionPage extends React.Component {
 
 const mapStateToProps = (state, props) => ({
     definition: state.definition,
-    id: state.id
+    id: state.id,
+    isCorrect: state.isCorrect,
+    totalQs: state.totalQs,
+    correctQs: state.correctQs
 });
 
 export default connect(mapStateToProps)(QuestionPage)
