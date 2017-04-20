@@ -1,13 +1,13 @@
 import React from 'react';
-import * as actions from '../actions';
+import * as actions from '../actions/actions-index';
 import {connect} from 'react-redux';
 //import * as Cookies from 'js-cookie';
 
 export class QuestionPage extends React.Component {
-    constructor(props) {
-        super(props);
-
-    }
+    // constructor(props) {
+    //     super(props);
+    //
+    // }
 
     componentDidMount() {
         this.props.dispatch(actions.fetchQuestion())
@@ -16,7 +16,7 @@ export class QuestionPage extends React.Component {
 
 
     render() {
-        const question = this.state.definition;
+        const question = this.props.definition;
 
 
         return (
@@ -27,10 +27,8 @@ export class QuestionPage extends React.Component {
     }
 }
 
-function mapStateToProps(state, props) {
-    return {
-        definition: state.definition
-    }
-}
+const mapStateToProps = (state, props) => ({
+    definition: state.definition
+});
 
 export default connect(mapStateToProps)(QuestionPage)

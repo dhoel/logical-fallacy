@@ -91,7 +91,11 @@ app.get('/api/me',
     (req, res) => res.json({
         googleId: req.user.googleId
     })
+
 );
+
+
+let currentQuestion = 0
 
 app.get('/api/questions',
     passport.authenticate('bearer', {session: false}),
@@ -101,7 +105,6 @@ app.get('/api/questions',
             .exec()
             .then(question => {
                 const {_id, definition} = question[0];
-                console.log(_id, definition);
                 res.status(201).json({id:_id, definition:definition});
 
 
@@ -112,6 +115,13 @@ app.get('/api/questions',
             })
     }
 );
+
+
+// app.put('/api/questions/:id')
+//    did they get it right?
+//    modify the currentQuestion
+//    send a response
+//      correct/incorrect
 
 // Serve the built client
 app.use(express.static(path.resolve(__dirname, '../client/build')));
