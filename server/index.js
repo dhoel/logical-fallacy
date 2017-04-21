@@ -123,12 +123,7 @@ app.get('/api/fetch-questions/:id',
             .exec()
             .then(user => {
                 length = user.questions.length
-                user.questions.sort(function(a, b) {return (a.m)-(b.m)})
-                return user.save()
-            })
-            .then(user => {
-
-                const {_id, definition} = user.questions[0];
+                const {_id, definition} = user.questions[currentQuestion];
                 res.status(201).json({id:_id, definition:definition});
             })
             .catch(err => {
@@ -141,45 +136,22 @@ app.get('/api/fetch-questions/:id',
 app.put('/api/check-answers/:id', jsonParser,
     passport.authenticate('bearer', {session: false}),
     (req, res) => {
-        // currentQuestion++
-        // if (currentQuestion === length) {
-        //     currentQuestion = 0
-        // }
+        currentQuestion++
+        if (currentQuestion === length) {
+            currentQuestion = 0
+        }
         let isCorrect = false
 
-        User.findById(req.params.id)//.exec()
+        User.findById(req.params.id).exec()
             .then(user => {
-                console.log('first quetsion',user.questions[0])
-                // user.questions[0].m = 100
-                let temp = user.questions.slice(0);
-                temp[0].m = 100
-                user.questions = temp;
-                // if (user.questions[0].fallacy !== req.body.answer) {
-                //
-                // let temp = user.questions[0].m
-                //     user.questions[0].m = user.questions[1].m
-                //     user.questions[1].m = temp
-                //     console.log('wrong answer', user.questions)
-                //     // res.json(isCorrect)
-                //     // return user.save()
-                // }
-                // else {
-                //     user.questions[0].m = user.questions.length +1
-                //     user.questions.forEach(e => {
-                //         e.m --
-                //     })
-                //     console.log('correct answer', user.questions)
-                //     isCorrect = true
-                //     // res.json(isCorrect)
-                //     // return user.save()
-                // }
-                user.markModified('questions')
-                return user.save()
+                if (user.questions[0].fallacy !== req.body.answer) {
+                    res.json(isCorrect)
+                }
+                else {
+                    isCorrect = true
+                    res.json(isCorrect)
+                }
 
-
-            }).then(user => {
-                console.log('after save', user)
-                res.json(isCorrect)
             })
 
         /*
