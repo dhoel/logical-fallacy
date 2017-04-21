@@ -112,6 +112,7 @@ app.get('/api/me',
 );
 
 let currentQuestion = 0
+let length
 
 app.get('/api/fetch-questions/:id',
     passport.authenticate('bearer', {session: false}),
@@ -121,10 +122,9 @@ app.get('/api/fetch-questions/:id',
             .findById(req.params.id)
             .exec()
             .then(user => {
+                length = user.questions.length
                 const {_id, definition} = user.questions[currentQuestion];
                 res.status(201).json({id:_id, definition:definition});
-
-
             })
             .catch(err => {
                 res.status(500).json({message: "Internal server error"})
@@ -137,6 +137,9 @@ app.put('/api/check-answers/:id', jsonParser,
     passport.authenticate('bearer', {session: false}),
     (req, res) => {
         currentQuestion++
+        if (currentQuestion === length) {
+            currentQuestion = 0
+        }
         let isCorrect = false
         Question
             .findById(req.params.id)
