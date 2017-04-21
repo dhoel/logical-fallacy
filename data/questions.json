@@ -2,28 +2,16 @@
  "fallacy": "strawman", "m": 1}
 
 {"definition": "A personal attack against the person instead of addressing their argument.",
-  "fallacy": "ad hominem", "m": 1}
+  "fallacy": "ad hominem", "m": 2}
 
 {"definition": "Stating two alternative facts are the only possibilities, when there are other possibilities.",
- "fallacy": "false dilemma", "m": 1}
+ "fallacy": "false dilemma", "m": 3}
 
 {"definition": "Stating an authority or expert believes something, therefore it must be true",
- "fallacy": "appeal to authority", "m": 1}
+ "fallacy": "appeal to authority", "m": 4}
 
 {"definition": "Changing the subject to a topic that is easier to attack.",
- "fallacy": "red herring", "m": 1}
+ "fallacy": "red herring", "m": 5}
 
 {"definition": "Stating an argument is true because many people believe it.",
- "fallacy": "appeal to popularity", "m": 1}
- 
- {"definition": "Stating an argument is true because many people believe it.",
- "fallacy": "appeal to popularity", "m": 1}
-
- {"definition": "Stating an argument is true because many people believe it.",
- "fallacy": "appeal to popularity", "m": 1}
-
- {"definition": "Stating an argument is true because many people believe it.",
- "fallacy": "appeal to popularity", "m": 1}
-
- {"definition": "Stating an argument is true because many people believe it.",
-  "fallacy": "appeal to popularity", "m": 1}
+ "fallacy": "appeal to popularity", "m": 6}

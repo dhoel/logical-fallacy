@@ -15,6 +15,7 @@ export class QuestionPage extends React.Component {
     onSubmit(e) {
         e.preventDefault();
         let answerData = {
+            userId: this.props.userId,
             qID: this.props.qID,
             answer: this.answer.value.toLowerCase()
         }
