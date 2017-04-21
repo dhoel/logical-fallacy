@@ -10,16 +10,17 @@ export class QuestionPage extends React.Component {
     }
 
     componentDidMount() {
-        this.props.dispatch(actions.fetchQuestion())
+        this.props.dispatch(actions.fetchQuestion(this.props.userId))
     }
     onSubmit(e) {
         e.preventDefault();
         let answerData = {
-            qID: this.props.id,
+            qID: this.props.qID,
             answer: this.answer.value.toLowerCase()
         }
+
         this.props.dispatch(actions.validateAnswer(answerData))
-        this.props.dispatch(actions.fetchQuestion())
+        this.props.dispatch(actions.fetchQuestion(this.props.userId))
     }
 
     render() {
@@ -29,7 +30,7 @@ export class QuestionPage extends React.Component {
         return (
             <div>
                 <div className='user'>
-                    <h3>{this.props.currentUser}</h3>
+                    <h3>{this.props.userName}</h3>
                 </div>
                 <div className='total-correct'>
                     <span>Total: {this.props.totalQs}</span>
@@ -55,9 +56,10 @@ export class QuestionPage extends React.Component {
 }
 
 const mapStateToProps = (state, props) => ({
-    currentUser: state.currentUser,
+    userName: state.userName,
+    userId: state.userId,
     definition: state.definition,
-    id: state.id,
+    qID: state.qID,
     isCorrect: state.isCorrect,
     totalQs: state.totalQs,
     correctQs: state.correctQs

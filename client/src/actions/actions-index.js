@@ -49,14 +49,15 @@ export const validateUser = () => dispatch => {
             }
             return res.json();
         }).then(currentUser => {
+            //console.log(currentUser)
             dispatch(validateUserSuccess(currentUser))
         })
     }
 }
 
-export const fetchQuestion = () => dispatch => {
+export const fetchQuestion = (uid) => dispatch => {
     const accessToken = Cookies.get('accessToken');
-    fetch('/api/questions', {
+    fetch(`/api/fetch-questions/${uid}`, {
             headers: {
                 'Authorization': `Bearer ${accessToken}`
             }
@@ -67,6 +68,7 @@ export const fetchQuestion = () => dispatch => {
         return res.json();
     })
     .then(question => {
+        //console.log(question)
         dispatch(fetchQuestionSuccess(question));
     })
     .catch(error => {
@@ -76,7 +78,7 @@ export const fetchQuestion = () => dispatch => {
 
 export const validateAnswer = (answerData) => dispatch => {
     const accessToken = Cookies.get('accessToken');
-    return fetch(`/api/questions/${answerData.qID}`,
+    return fetch(`/api/check-answers/${answerData.qID}`,
         {
             headers: {
                 'Authorization': `Bearer ${accessToken}`,

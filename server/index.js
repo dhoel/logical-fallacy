@@ -50,14 +50,16 @@ passport.use(
                     .exec()
                     .then(questions => {
                         User.update({'googleId':profile.id},
-                                    {$set:{'questions':questions}})
-                            .exec()
+                                {$set:{'questions':questions}})
+                        .exec()
                         return cb(null, questions);
                     })
             })
             .catch(err => {
                 return cb(err);
             })
+
+
     }
 ));
 
@@ -104,22 +106,22 @@ app.get('/api/auth/logout', (req, res) => {
 app.get('/api/me',
     passport.authenticate('bearer', {session: false}),
     (req, res) => {
-        res.json(req.user.userName)
+        const {_id, userName} = req.user
+        res.json({id:_id, userName:userName})
     }
-
 );
-
 
 let currentQuestion = 0
 
-app.get('/api/questions',
+app.get('/api/fetch-questions/:id',
     passport.authenticate('bearer', {session: false}),
     (req, res) => {
-        Question
-            .find()
+
+        User
+            .findById(req.params.id)
             .exec()
-            .then(question => {
-                const {_id, definition} = question[currentQuestion];
+            .then(user => {
+                const {_id, definition} = user.questions[currentQuestion];
                 res.status(201).json({id:_id, definition:definition});
 
 
@@ -131,7 +133,7 @@ app.get('/api/questions',
     }
 );
 
-app.put('/api/questions/:id', jsonParser,
+app.put('/api/check-answers/:id', jsonParser,
     passport.authenticate('bearer', {session: false}),
     (req, res) => {
         currentQuestion++

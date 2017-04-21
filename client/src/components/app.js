@@ -19,7 +19,7 @@ export class App extends React.Component {
 
     render() {
 
-        if (!this.props.currentUser) {
+        if (!this.props.userName) {
             return <LoginPage />;
         }
         return <QuestionPage />;
@@ -27,7 +27,7 @@ export class App extends React.Component {
 }
 
 const mapStateToProps = (state, props) => ({
-    currentUser: state.currentUser
+    userName: state.userName
 });
 
 export default connect(mapStateToProps)(App);
