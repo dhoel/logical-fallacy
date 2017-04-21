@@ -43,10 +43,22 @@ passport.use(
             .then(user => {
                 return cb(null, user);
             })
+            .then(user => {
+
+                Question
+                    .find()
+                    .exec()
+                    .then(questions => {
+                        User.update({'googleId':profile.id},
+                                    {$set:{'questions':questions}})
+                            .exec()
+                        return cb(null, questions);
+                    })
+            })
             .catch(err => {
                 return cb(err);
             })
-        }
+    }
 ));
 
 passport.use(
