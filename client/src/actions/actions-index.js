@@ -78,7 +78,6 @@ export const fetchQuestion = (uid) => dispatch => {
 
 export const validateAnswer = (answerData) => dispatch => {
     const accessToken = Cookies.get('accessToken');
-    console.log(answerData.userId)
     return fetch(`/api/check-answers/${answerData.userId}`,
         {
             headers: {
