@@ -119,6 +119,12 @@ app.get('/api/fetch-questions/:id',
         User
             .findById(req.params.id)
             .exec()
+            // The below sort and save didn't work and was causing the
+            // following error:
+            // "no matching document found...: VersionError"
+            // This seems to be a workflow issue with mongoose versioning
+            // where the below save is expecing a different version (_v value)
+            // ***
             // .then(user => {
             //     user.questions.sort((a, b) => (a.m) - (b.m))
             //     return user.save()
