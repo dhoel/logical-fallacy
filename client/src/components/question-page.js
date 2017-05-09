@@ -21,7 +21,7 @@ export class QuestionPage extends React.Component {
         }
 
         this.props.dispatch(actions.validateAnswer(answerData))
-        this.props.dispatch(actions.fetchQuestion(this.props.userId))
+        //this.props.dispatch(actions.fetchQuestion(this.props.userId))
     }
 
     render() {

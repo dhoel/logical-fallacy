@@ -95,5 +95,7 @@ export const validateAnswer = (answerData) => dispatch => {
         })
         .then(isCorrect => {
             dispatch(validateAnswerSuccess(isCorrect));
+            dispatch(fetchQuestion(answerData.userId));
         })
+
 }

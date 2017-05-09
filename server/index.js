@@ -131,8 +131,10 @@ app.get('/api/fetch-questions/:id',
             // })
             .then(user => {
 
-                const {_id, definition} = user.questions[0];
+                var {_id, definition} = user.questions[0];
+                console.log(_id, definition)
                 res.status(201).json({id:_id, definition:definition});
+
             })
             .catch(err => {
                 res.status(500).json({message: "Internal server error"})
@@ -152,7 +154,7 @@ app.put('/api/check-answers/:id', jsonParser,
 
                 if (user.questions[0].fallacy !== req.body.answer) {
 
-                let temp = user.questions[0].m
+                    let temp = user.questions[0].m
                     user.questions[0].m = user.questions[1].m
                     user.questions[1].m = temp
                 }
@@ -164,10 +166,8 @@ app.put('/api/check-answers/:id', jsonParser,
                     isCorrect = true
                 }
                 user.questions.sort((a, b) => (a.m) - (b.m))
-                user.markModified('questions')
+                //user.markModified('questions')
                 return user.save()
-
-
             }).then(user => {
                 res.json(isCorrect)
             })
