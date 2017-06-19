@@ -49,7 +49,6 @@ export const validateUser = () => dispatch => {
             }
             return res.json();
         }).then(currentUser => {
-            //console.log(currentUser)
             dispatch(validateUserSuccess(currentUser))
         })
     }
@@ -68,7 +67,6 @@ export const fetchQuestion = (uid) => dispatch => {
         return res.json();
     })
     .then(question => {
-        //console.log(question)
         dispatch(fetchQuestionSuccess(question));
     })
     .catch(error => {
