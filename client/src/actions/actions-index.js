@@ -4,31 +4,31 @@ export const VALIDATE_USER_SUCCESS = 'VALIDATE_USER_SUCCESS';
 export const validateUserSuccess = data => ({
     type: VALIDATE_USER_SUCCESS,
     currentUser: data
-})
+});
 
 export const VALIDATE_USER_FAILURE = 'VALIDATE_USER_FAILURE';
 export const validateUserFailure = error => ({
     type: VALIDATE_USER_FAILURE,
     currentUser: error
-})
+});
 
 export const FETCH_QUESTION_SUCCESS = 'FETCH_QUESTION_SUCCESS';
 export const fetchQuestionSuccess = data => ({
     type: FETCH_QUESTION_SUCCESS,
     question: data
-})
+});
 
 export const FETCH_QUESTION_FAILURE = 'FETCH_QUESTION_FAILURE';
 export const fetchQuestionFailure = error => ({
     type: FETCH_QUESTION_FAILURE,
     question: error
-})
+});
 
 export const VALIDATE_ANSWER_SUCCESS = 'VALIDATE_ANSWER_SUCCESS';
 export const validateAnswerSuccess = data => ({
     type: VALIDATE_ANSWER_SUCCESS,
     isCorrect: data
-})
+});
 
 export const validateUser = () => dispatch => {
     const accessToken = Cookies.get('accessToken');
@@ -49,14 +49,14 @@ export const validateUser = () => dispatch => {
             }
             return res.json();
         }).then(currentUser => {
-            dispatch(validateUserSuccess(currentUser))
-        })
+            dispatch(validateUserSuccess(currentUser));
+        });
     }
-}
+};
 
-export const fetchQuestion = (uid) => dispatch => {
+export const fetchQuestion = () => dispatch => {
     const accessToken = Cookies.get('accessToken');
-    fetch(`/api/fetch-questions/${uid}`, {
+    fetch('/api/fetch-questions', {
             headers: {
                 'Authorization': `Bearer ${accessToken}`
             }
@@ -71,19 +71,19 @@ export const fetchQuestion = (uid) => dispatch => {
     })
     .catch(error => {
         dispatch(fetchQuestionFailure(error));
-    })
-}
+    });
+};
 
-export const validateAnswer = (answerData) => dispatch => {
+export const validateAnswer = (answer) => dispatch => {
     const accessToken = Cookies.get('accessToken');
-    return fetch(`/api/check-answers/${answerData.userId}`,
+    return fetch('/api/check-answers',
         {
             headers: {
                 'Authorization': `Bearer ${accessToken}`,
                 'Content-Type': 'application/json'
             },
             method: 'PUT',
-            body: JSON.stringify(answerData)
+            body: JSON.stringify(answer)
         })
         .then(res => {
             if (!res.ok) {
@@ -93,7 +93,7 @@ export const validateAnswer = (answerData) => dispatch => {
         })
         .then(isCorrect => {
             dispatch(validateAnswerSuccess(isCorrect));
-            dispatch(fetchQuestion(answerData.userId));
-        })
+            dispatch(fetchQuestion());
+        });
 
-}
+};

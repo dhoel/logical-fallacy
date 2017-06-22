@@ -10,17 +10,15 @@ export class QuestionPage extends React.Component {
     }
 
     componentDidMount() {
-        this.props.dispatch(actions.fetchQuestion(this.props.userId));
+        this.props.dispatch(actions.fetchQuestion());
     }
     onSubmit(e) {
         e.preventDefault();
-        let answerData = {
-            userId: this.props.userId,
-            qID: this.props.qID,
+        let answer = {
             answer: this.answer.value.toLowerCase()
         };
 
-        this.props.dispatch(actions.validateAnswer(answerData));
+        this.props.dispatch(actions.validateAnswer(answer));
         //this.props.dispatch(actions.fetchQuestion(this.props.userId))
     }
 
@@ -33,9 +31,11 @@ export class QuestionPage extends React.Component {
                 <div className='user'>
                     <h3>{this.props.userName}</h3>
                 </div>
-                <div className='total-correct'>
-                    <span>Total: {this.props.totalQs}</span>
-                    <span>Correct: {this.props.correctQs}</span>
+                <div className='num-questions'>
+                    <span>Questions Attempted: {this.props.totalQs}</span>
+                </div>
+                <div className='correct-answers'>
+                    <span>Correct Answers: {this.props.correctQs}</span>
                 </div>
                 <div className='question'>
                     {question}
@@ -50,6 +50,9 @@ export class QuestionPage extends React.Component {
                             className='btn submit-btn'>Submit</button>
                     </form>
                 </div>
+                <div>
+                  <a href='/api/auth/logout'>Log Out</a>
+                </div>
             </div>
 
         );
@@ -58,9 +61,7 @@ export class QuestionPage extends React.Component {
 
 const mapStateToProps = (state, props) => ({
     userName: state.userName,
-    userId: state.userId,
     definition: state.definition,
-    qID: state.qID,
     isCorrect: state.isCorrect,
     totalQs: state.totalQs,
     correctQs: state.correctQs

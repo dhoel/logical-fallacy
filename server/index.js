@@ -46,7 +46,7 @@ passport.use(
           .then(() => {
             Question
               .find()
-              .exec()
+              //.exec()
               .then((questions) => {
                 questions.sort((a, b) => (a.m) - (b.m));
                 User.update({ googleId: profile.id },
@@ -109,12 +109,11 @@ app.get('/api/me',
   }
 );
 
-app.get('/api/fetch-questions/:id',
+app.get('/api/fetch-questions',
   passport.authenticate('bearer', { session: false }),
   (req, res) => {
     User
-      .findById(req.params.id)
-      .exec()
+      .findOne({ googleId: req.user.googleId })
       .then((user) => {
         const { _id, definition } = user.questions[0];
         res.status(201).json({ id: _id, definition });
@@ -126,12 +125,12 @@ app.get('/api/fetch-questions/:id',
   }
 );
 
-app.put('/api/check-answers/:id', jsonParser,
+app.put('/api/check-answers', jsonParser,
     passport.authenticate('bearer', { session: false }),
     (req, res) => {
       let isCorrect = false;
       User
-        .findById(req.params.id)// .exec()
+        .findOne({ googleId: req.user.googleId })
         .then((user) => {
           if (user.questions[0].fallacy !== req.body.answer) {
             const temp = user.questions[0].m;
