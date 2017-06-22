@@ -32,7 +32,6 @@ passport.use(
     callbackURL: '/api/auth/google/callback',
   },
   (accessToken, refreshToken, profile, cb) => {
-    console.log(cb);
     User
       .findOne({ googleId: profile.id })
       .then((user) => {
@@ -43,7 +42,7 @@ passport.use(
             googleId: profile.id,
             accessToken,
           })
-          .then(user => cb(null, user))
+          .then(newUser => cb(null, newUser))
           .then(() => {
             Question
               .find()
@@ -56,14 +55,14 @@ passport.use(
                 return cb(null, questions);
               });
           })
-              .catch(err => cb(err)
-              );
+              .catch(err => cb(err));
         } else {
           return cb(null, user);
         }
+        return undefined;
       });
-  }
-));
+  })
+);
 
 passport.use(
   new BearerStrategy(
@@ -77,8 +76,7 @@ passport.use(
           }
           return done(null, user);
         })
-        .catch(err => cb(err)
-        );
+        .catch(err => cb(err));
     }
   )
 );
@@ -92,7 +90,6 @@ app.get('/api/auth/google/callback',
     session: false,
   }),
     (req, res) => {
-      console.log(res)
       res.cookie('accessToken', req.user.accessToken, { expires: 0 });
       res.redirect('/');
     }
@@ -118,13 +115,13 @@ app.get('/api/fetch-questions/:id',
     User
       .findById(req.params.id)
       .exec()
-      .then(user => {
+      .then((user) => {
         const { _id, definition } = user.questions[0];
         res.status(201).json({ id: _id, definition });
       })
-      .catch(err => {
+      .catch((err) => {
         res.status(500).json({ message: 'Internal server error' });
-        console.error(err)
+        console.error(err);
       });
   }
 );
@@ -132,25 +129,22 @@ app.get('/api/fetch-questions/:id',
 app.put('/api/check-answers/:id', jsonParser,
     passport.authenticate('bearer', { session: false }),
     (req, res) => {
-      let isCorrect = false
+      let isCorrect = false;
       User
         .findById(req.params.id)// .exec()
-        .then(user => {
+        .then((user) => {
           if (user.questions[0].fallacy !== req.body.answer) {
-            let temp = user.questions[0].m
+            const temp = user.questions[0].m;
             user.questions[0].m = user.questions[1].m
             user.questions[1].m = temp
           } else {
             user.questions[0].m = user.questions.length + 1
-            user.questions.forEach(e => {
-              e.m --
-            });
+            user.questions.forEach(e => { e.m -= 1; });
             isCorrect = true;
           }
           user.questions.sort((a, b) => (a.m) - (b.m));
-          // user.markModified('questions')
           return user.save();
-        }).then(user => {
+        }).then(() => {
           res.json(isCorrect);
         });
     }
@@ -169,7 +163,7 @@ app.get(/^(?!\/api(\/|$))/, (req, res) => {
 let server;
 function runServer(port = 3001, databaseUrl = secret.DATABASE_URL) {
   return new Promise((resolve, reject) => {
-    mongoose.connect(databaseUrl, err => {
+    mongoose.connect(databaseUrl, (err) => {
       if (err) {
         return reject(err);
       }
@@ -180,6 +174,7 @@ function runServer(port = 3001, databaseUrl = secret.DATABASE_URL) {
         mongoose.disconnect();
         reject(err);
       });
+      return undefined;
     });
   });
 }
@@ -188,11 +183,12 @@ function closeServer() {
   return mongoose.disconnect().then(() => {
     return new Promise((resolve, reject) => {
       console.log('Closing server');
-      server.close(err => {
+      server.close((err) => {
         if (err) {
           return reject(err);
         }
         resolve();
+        return undefined;
       });
     });
   });
@@ -203,5 +199,5 @@ if (require.main === module) {
 }
 
 module.exports = {
-  app, runServer, closeServer
+  app, runServer, closeServer,
 };

@@ -10,7 +10,7 @@ export class QuestionPage extends React.Component {
     }
 
     componentDidMount() {
-        this.props.dispatch(actions.fetchQuestion(this.props.userId))
+        this.props.dispatch(actions.fetchQuestion(this.props.userId));
     }
     onSubmit(e) {
         e.preventDefault();
@@ -18,9 +18,9 @@ export class QuestionPage extends React.Component {
             userId: this.props.userId,
             qID: this.props.qID,
             answer: this.answer.value.toLowerCase()
-        }
+        };
 
-        this.props.dispatch(actions.validateAnswer(answerData))
+        this.props.dispatch(actions.validateAnswer(answerData));
         //this.props.dispatch(actions.fetchQuestion(this.props.userId))
     }
 
@@ -66,4 +66,4 @@ const mapStateToProps = (state, props) => ({
     correctQs: state.correctQs
 });
 
-export default connect(mapStateToProps)(QuestionPage)
+export default connect(mapStateToProps)(QuestionPage);

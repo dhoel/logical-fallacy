@@ -7,5 +7,5 @@ export default function LoginPage() {
             <h2>Logical Fallacy X</h2>
             <a href={'/api/auth/google'}>Login with Google</a>
         </div>
-    )
+    );
 }
