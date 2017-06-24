@@ -1,5 +1,59 @@
-body {
+* {
+  box-sizing: border-box;
   margin: 0;
-  padding: 0;
-  font-family: sans-serif;
+}
+
+html {
+  background: url(./images/platos-academy.jpg) no-repeat center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  
+}
+
+html, body {
+  height: 100%;
+}
+
+#root {
+  height: 100%;
+}
+
+.login-page {
+  height: 100%;
+  background-color: #0D160B;
+  overflow: hidden;
+  /*border-top: 1px solid #0D160B;*/
+}
+
+.title {
+  margin: 100px;
+  font-family: 'Diplomata SC';
+  font-size: 275%;
+  color: #E0E1DD;
+  text-align: center;
+}
+
+.login-img {
+  display: block;
+  margin: 0 auto;
+}
+
+.btn-login {
+  display: block;
+  height: 60px;
+  width: 170px;
+  margin: 50px auto;
+  border: 3px solid #778DA9;
+  border-radius: 7px;
+  background-color: #0D160B;
+  color: #778DA9;
+  text-decoration: none;
+  cursor: default;
+  padding: 20px;
+}
+
+.btn-login:hover {
+  border: 3px solid #E0E1DD;
 }

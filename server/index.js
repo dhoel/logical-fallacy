@@ -46,12 +46,10 @@ passport.use(
           .then(() => {
             Question
               .find()
-              //.exec()
               .then((questions) => {
                 questions.sort((a, b) => (a.m) - (b.m));
                 User.update({ googleId: profile.id },
-                          { $set: { questions } })
-              .exec();
+                          { $set: { questions } });
                 return cb(null, questions);
               });
           })
@@ -104,8 +102,7 @@ app.get('/api/auth/logout', (req, res) => {
 app.get('/api/me',
   passport.authenticate('bearer', { session: false }),
   (req, res) => {
-    const { _id, userName } = req.user;
-    res.json({ id: _id, userName });
+    res.json(req.user.userName);
   }
 );
 
@@ -115,8 +112,9 @@ app.get('/api/fetch-questions',
     User
       .findOne({ googleId: req.user.googleId })
       .then((user) => {
-        const { _id, definition } = user.questions[0];
-        res.status(201).json({ id: _id, definition });
+        res.status(201).json(user.questions[0].definition);
+        // const { definition } = user.questions[0];
+        // res.status(201).json({ definition });
       })
       .catch((err) => {
         res.status(500).json({ message: 'Internal server error' });

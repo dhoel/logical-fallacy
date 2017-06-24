@@ -12,10 +12,10 @@ const initialState = {
 export const qReducer = (state=initialState, action) => {
 
     if (action.type === actions.VALIDATE_USER_SUCCESS) {
-        return {...state, userName: action.currentUser.userName};
+        return {...state, userName: action.currentUser};
     }
     if (action.type === actions.FETCH_QUESTION_SUCCESS) {
-        return {...state, definition: action.question.definition};
+        return {...state, definition: action.question};
     }
     if (action.type === actions.VALIDATE_ANSWER_SUCCESS) {
         if (action.isCorrect) {
