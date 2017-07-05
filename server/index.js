@@ -49,7 +49,8 @@ passport.use(
               .then((questions) => {
                 questions.sort((a, b) => (a.m) - (b.m));
                 User.update({ googleId: profile.id },
-                          { $set: { questions } });
+                          { $set: { questions } })
+                .exec();
                 return cb(null, questions);
               });
           })
