@@ -22,16 +22,20 @@ html, body {
 }
 
 .login-page {
-  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
   background-color: #0D160B;
   overflow: hidden;
-  /*border-top: 1px solid #0D160B;*/
+
 }
 
 .title-login {
-  margin: 100px;
+  margin: 6% 0;
   font-family: 'Diplomata SC';
-  font-size: 275%;
+  /*font-size: 275%;*/
+  font-size: 3vw;
   color: #E0E1DD;
   text-align: center;
 }
@@ -39,8 +43,7 @@ html, body {
 .login-img {
   display: block;
   margin: 0 auto;
-  max-width: 65%;
-  flex: 2 2;
+  /*max-width: 65%;*/
 }
 
 .btn {
@@ -56,7 +59,7 @@ html, body {
 .btn-login {
   height: 60px;
   width: 170px;
-  margin: 50px auto;
+  margin: 4% auto;
   border: 3px solid #778DA9;
   background-color: #0D160B;
   color: #778DA9;
@@ -102,7 +105,7 @@ html, body {
 }
 
 .quiz-main {
-  margin: 17% 20% 0 20%;
+  margin: 15% 15% 0 15%;
   display: flex;
   justify-content: center;
   flex-direction: column;
@@ -156,16 +159,28 @@ html, body {
   margin-left: 1rem;
 }
 
-@media (max-width: 1180px) {
+@media (max-width: 1680px) {
   .title-login {
-    margin: 10%;
-    font-size: 3.5vw;
+    /*margin: 10%;*/
+    /*font-size: 3vw;*/
+  }
+  .login-img {
+    max-width: 85%;
   }
 }
 
-@media (max-width: 1000px) {
-  .title-login {
+@media (max-width: 1440px) {
+  .login-img {
+    max-width: 75%;
+  }
+}
+
+@media (max-width: 1024px) {
+  /*.title-login {
     margin: 12%;
+  }*/
+  .login-img {
+    max-width: 60%;
   }
   .user-greet {
     font-size: 140%;
@@ -179,9 +194,9 @@ html, body {
 }
 
 @media (max-width: 850px) {
-  .title-login {
+  /*.title-login {
     margin: 14%;
-  }
+  }*/
   .user-greet {
     font-size: 120%;
     margin-left: 10px;
@@ -194,7 +209,7 @@ html, body {
     margin-right: 10px;
   }
   .quiz-main {
-    margin-top: 20%;
+    /*margin-top: 20%;*/
     font-size: 130%;
   }
   .answer, .btn-submit {
@@ -209,9 +224,9 @@ html, body {
     height: 8rem;
     padding-top: 1rem;
   }
-  .title-login {
+  /*.title-login {
     margin: 16%;
-  }
+  }*/
   .user-greet {
     margin-left: 0;
     margin-bottom: 5px;
@@ -224,7 +239,7 @@ html, body {
     margin-top: 5px;
   }
   .quiz-main {
-    margin-top: 25%;
+    /*margin-top: 25%;*/
     font-size: 110%;
   }
   .answer, .btn-submit {
@@ -233,9 +248,9 @@ html, body {
 }
 
 @media (max-width: 580px) {
-  .title-login {
+  /*.title-login {
     margin: 18%;
-  }
+  }*/
   .num{
     display: block;
   }
@@ -249,6 +264,6 @@ html, body {
 
 @media (max-width: 450px) {
   .quiz-main {
-    margin: 25% 15% 0 15%;
+    /*margin: 25% 15% 0 15%;*/
   }
 }
