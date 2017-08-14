@@ -1,7 +1,7 @@
 import React from 'react';
 import * as actions from '../actions/actions-index';
 import {connect} from 'react-redux';
-import Dropdown from 'react-dropdown';
+import Dropdown from 'react-accessible-dropdown';
 
 export class QuestionPage extends React.Component {
   constructor(props) {

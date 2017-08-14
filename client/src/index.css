@@ -124,14 +124,20 @@ html, body {
 
 .submit-answer form {
   margin-top: 1rem;
+  width: 12rem;
 
 }
 
-.answer {
-  font-size: 13pt;
+.Dropdown-control, .Dropdown-menu {
+  font-size: 15pt;
+  text-align: center;
   border: 4px ridge #BC8F8F;
   border-radius: 3px;
-  background: #E0E1DD;
+  background: rgba(224, 225, 221, 0.3);
+}
+
+.Dropdown-option:hover {
+  background-color: #E0E1DD;
 }
 
 .btn-submit {
