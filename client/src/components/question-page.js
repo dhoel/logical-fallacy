@@ -46,7 +46,7 @@ export class QuestionPage extends React.Component {
           <div className='submit-answer'>
             <form onSubmit={this.onSubmit}>
               <Dropdown options={answerOptions} onChange={this._onSelect}
-                ref={ref => this.answer = ref} placeholder='Select an answer' />
+                ref={ref => this.answer = ref} placeholder='Select an Answer' />
               <button type='submit'
                 className='btn btn-submit'>Submit</button>
             </form>

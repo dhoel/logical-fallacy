@@ -34,7 +34,6 @@ html, body {
 .title-login {
   margin: 6% 0;
   font-family: 'Diplomata SC';
-  /*font-size: 275%;*/
   font-size: 3vw;
   color: #E0E1DD;
   text-align: center;
@@ -43,7 +42,6 @@ html, body {
 .login-img {
   display: block;
   margin: 0 auto;
-  /*max-width: 65%;*/
 }
 
 .btn {
@@ -124,7 +122,7 @@ html, body {
 
 .submit-answer form {
   margin-top: 1rem;
-  width: 12rem;
+  width: 14rem;
 
 }
 
@@ -138,6 +136,21 @@ html, body {
 
 .Dropdown-option:hover {
   background-color: #E0E1DD;
+}
+
+.is-open .Dropdown-control {
+  border-style: ridge;
+  border-radius: 3px 3px 0 0;
+  border-width: 4px 4px 0;
+  border-color: #BC8F8F;
+  border-bottom: 1px solid black;
+}
+
+.is-open .Dropdown-menu {
+  border-style: ridge;
+  border-radius: 0 0 3px 3px;
+  border-width: 0 4px 4px;
+  border-color: #BC8F8F;
 }
 
 .btn-submit {
@@ -167,8 +180,6 @@ html, body {
 
 @media (max-width: 1680px) {
   .title-login {
-    /*margin: 10%;*/
-    /*font-size: 3vw;*/
   }
   .login-img {
     max-width: 85%;
@@ -182,9 +193,6 @@ html, body {
 }
 
 @media (max-width: 1024px) {
-  /*.title-login {
-    margin: 12%;
-  }*/
   .login-img {
     max-width: 60%;
   }
@@ -200,9 +208,6 @@ html, body {
 }
 
 @media (max-width: 850px) {
-  /*.title-login {
-    margin: 14%;
-  }*/
   .user-greet {
     font-size: 120%;
     margin-left: 10px;
@@ -215,7 +220,6 @@ html, body {
     margin-right: 10px;
   }
   .quiz-main {
-    /*margin-top: 20%;*/
     font-size: 130%;
   }
   .answer, .btn-submit {
@@ -230,9 +234,6 @@ html, body {
     height: 8rem;
     padding-top: 1rem;
   }
-  /*.title-login {
-    margin: 16%;
-  }*/
   .user-greet {
     margin-left: 0;
     margin-bottom: 5px;
@@ -245,7 +246,6 @@ html, body {
     margin-top: 5px;
   }
   .quiz-main {
-    /*margin-top: 25%;*/
     font-size: 110%;
   }
   .answer, .btn-submit {
@@ -254,9 +254,6 @@ html, body {
 }
 
 @media (max-width: 580px) {
-  /*.title-login {
-    margin: 18%;
-  }*/
   .num{
     display: block;
   }
@@ -270,6 +267,5 @@ html, body {
 
 @media (max-width: 450px) {
   .quiz-main {
-    /*margin: 25% 15% 0 15%;*/
   }
 }
