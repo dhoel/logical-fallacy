@@ -1,6 +1,7 @@
 import React from 'react';
 import * as actions from '../actions/actions-index';
 import {connect} from 'react-redux';
+import Dropdown from 'react-dropdown';
 
 export class QuestionPage extends React.Component {
   constructor(props) {
@@ -13,8 +14,9 @@ export class QuestionPage extends React.Component {
   }
   onSubmit(e) {
     e.preventDefault();
+    console.log(this.answer)
     let answer = {
-        answer: this.answer.value.toLowerCase()
+        answer: this.answer.state.selected.value.toLowerCase()
     };
     this.props.dispatch(actions.validateAnswer(answer));
     this.answer.value='';
@@ -23,6 +25,11 @@ export class QuestionPage extends React.Component {
   render() {
 
     const question = this.props.definition;
+
+    const answerOptions = [
+      'Appeal to Authority', 'Strawman', 'Ad Hominem', 'False Dilemma',
+      'Appeal to Popularity', 'Red Herring'
+    ];
 
     return (
       <div className='question-page'>
@@ -38,10 +45,8 @@ export class QuestionPage extends React.Component {
           </div>
           <div className='submit-answer'>
             <form onSubmit={this.onSubmit}>
-              <input className='answer' type="text" id='answer'
-                ref={ref => this.answer = ref}
-                placeholder='Answer'>
-              </input>
+              <Dropdown options={answerOptions} onChange={this._onSelect}
+                ref={ref => this.answer = ref} placeholder='Select an answer' />
               <button type='submit'
                 className='btn btn-submit'>Submit</button>
             </form>
