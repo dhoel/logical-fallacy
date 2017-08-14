@@ -14,7 +14,6 @@ export class QuestionPage extends React.Component {
   }
   onSubmit(e) {
     e.preventDefault();
-    console.log(this.answer)
     let answer = {
         answer: this.answer.state.selected.value.toLowerCase()
     };
