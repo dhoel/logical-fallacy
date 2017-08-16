@@ -6,25 +6,33 @@ import Dropdown from 'react-accessible-dropdown';
 export class QuestionPage extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {
+      hidden: true,
+    };
     this.onSubmit = this.onSubmit.bind(this);
   }
 
   componentDidMount() {
     this.props.dispatch(actions.fetchQuestion());
   }
+
   onSubmit(e) {
     e.preventDefault();
     let answer = {
         answer: this.answer.state.selected.value.toLowerCase()
     };
-    this.props.dispatch(actions.validateAnswer(answer));
-    this.answer.value='';
+    if (answer.answer) {
+      this.setState({hidden: true});
+      this.props.dispatch(actions.validateAnswer(answer));
+    } else {
+      this.setState({hidden: false});
+    }
   }
 
   render() {
 
     const question = this.props.definition;
-
+    const hidden = this.state.hidden ? 'no-warning' : 'warning';
     const answerOptions = [
       'Appeal to Authority', 'Strawman', 'Ad Hominem', 'False Dilemma',
       'Appeal to Popularity', 'Red Herring'
@@ -44,17 +52,22 @@ export class QuestionPage extends React.Component {
           </div>
           <div className='submit-answer'>
             <form onSubmit={this.onSubmit}>
-              <Dropdown options={answerOptions} onChange={this._onSelect}
-                ref={ref => this.answer = ref} placeholder='Select an Answer' />
+              <Dropdown options={answerOptions} placeholder='Select an Answer'
+                ref={ref => this.answer = ref} />
               <button type='submit'
                 className='btn btn-submit'>Submit</button>
             </form>
           </div>
           <div className='totals'>
-            <span className='num num-questions' >Questions Attempted: {this.props.totalQs}</span>
-            <span className='num num-correct'>Correct Answers: {this.props.correctQs}</span>
+            <span className='num num-questions'
+              >Questions Attempted: {this.props.totalQs}</span>
+            <span className='num num-correct'
+              >Correct Answers: {this.props.correctQs}</span>
           </div>
         </section>
+        <div className={hidden}>
+          <span>Please select an answer</span>
+        </div>
       </div>
 
     );

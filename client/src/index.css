@@ -103,7 +103,7 @@ html, body {
 }
 
 .quiz-main {
-  margin: 15% 15% 0 15%;
+  margin: 15% 15% 5% 15%;
   display: flex;
   justify-content: center;
   flex-direction: column;
@@ -127,11 +127,23 @@ html, body {
 }
 
 .Dropdown-control, .Dropdown-menu {
+  position: relative;
   font-size: 15pt;
   text-align: center;
   border: 4px ridge #BC8F8F;
   border-radius: 3px;
   background: rgba(224, 225, 221, 0.3);
+}
+
+.Dropdown-arrow {
+  border-color: #000 transparent transparent;
+  border-style: solid;
+  border-width: 5px 5px 0;
+  height: 0;
+  width: 0;
+  position: absolute;
+  right: 5px;
+  top: 10px;
 }
 
 .Dropdown-option:hover {
@@ -151,6 +163,11 @@ html, body {
   border-radius: 0 0 3px 3px;
   border-width: 0 4px 4px;
   border-color: #BC8F8F;
+}
+
+.is-open .Dropdown-arrow {
+  border-color: transparent transparent #000;
+  border-width: 0 5px 5px;
 }
 
 .btn-submit {
@@ -176,6 +193,23 @@ html, body {
 
 .num-correct {
   margin-left: 1rem;
+}
+
+.warning {
+  text-align: center;
+  font-size: 200%;
+  color: red;
+}
+
+.warning span {
+  padding: 1rem;
+  background: rgba(119, 141, 169, 0.8);
+  border: 1px solid #778DA9;
+  border-radius: 6px;
+}
+
+.no-warning {
+  display: none;
 }
 
 @media (max-width: 1680px) {
