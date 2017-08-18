@@ -92,6 +92,5 @@ export const validateAnswer = (answer) => dispatch => {
     })
     .then(isCorrect => {
       dispatch(validateAnswerSuccess(isCorrect));
-      dispatch(fetchQuestion());
     });
 };

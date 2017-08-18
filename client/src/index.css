@@ -4,7 +4,7 @@
 }
 
 body {
-  background: #BC8F8F url(./images/platos-academy.jpg)
+  background: #E3CFB0 url(./images/platos-academy.jpg)
     no-repeat center center fixed;
   -webkit-background-size: cover;
   -moz-background-size: cover;
@@ -58,9 +58,9 @@ html, body {
   height: 60px;
   width: 170px;
   margin: 4% auto;
-  border: 3px solid #778DA9;
+  border: 3px solid #4281A4;
   background-color: #0D160B;
-  color: #778DA9;
+  color: #4281A4;
 }
 
 .btn-login:hover {
@@ -71,7 +71,7 @@ html, body {
   height: 5rem;
   display: flex;
   align-items: center;
-  background: rgba(74, 106, 108, 0.65);
+  background: rgba(72, 169, 166, 0.65);
 }
 
 .user-greet {
@@ -92,25 +92,25 @@ html, body {
   height: 35px;
   width: 160px;
   margin-right: 30px;
-  border: 3px solid #333;
+  border: 3px solid #C1666B;
+  font-size: 13pt;
   color: #333;
-  background-color: #BC8F8F;
+  background: rgba(228, 223, 218, 0.4);
 }
 
 .btn-logout:hover {
-  background-color: #4A6A6C;
-  color: #E0E1DD;
+  background-color: #E4DFDA;
 }
 
 .quiz-main {
-  margin: 15% 15% 0 15%;
+  margin: 15% 15% 5% 15%;
   display: flex;
   justify-content: center;
   flex-direction: column;
   align-items: center;
-  background: rgba(119, 141, 169, 0.65);
+  background: rgba(66, 129, 164, 0.65);
   font-size: 150%;
-  border: 1px solid #778DA9;
+  border: 2px solid #48A9A6;
   border-radius: 6px;
 }
 
@@ -127,30 +127,47 @@ html, body {
 }
 
 .Dropdown-control, .Dropdown-menu {
+  position: relative;
   font-size: 15pt;
   text-align: center;
-  border: 4px ridge #BC8F8F;
+  border: 3px ridge #C1666B;
   border-radius: 3px;
-  background: rgba(224, 225, 221, 0.3);
+  background: rgba(228, 223, 218, 0.3);
+}
+
+.Dropdown-arrow {
+  border-color: #000 transparent transparent;
+  border-style: solid;
+  border-width: 5px 5px 0;
+  height: 0;
+  width: 0;
+  position: absolute;
+  right: 5px;
+  top: 10px;
 }
 
 .Dropdown-option:hover {
-  background-color: #E0E1DD;
+  background-color: #E4DFDA;
 }
 
 .is-open .Dropdown-control {
   border-style: ridge;
   border-radius: 3px 3px 0 0;
-  border-width: 4px 4px 0;
-  border-color: #BC8F8F;
+  border-width: 3px 3px 0;
+  border-color: #C1666B;
   border-bottom: 1px solid black;
 }
 
 .is-open .Dropdown-menu {
   border-style: ridge;
   border-radius: 0 0 3px 3px;
-  border-width: 0 4px 4px;
-  border-color: #BC8F8F;
+  border-width: 0 3px 3px;
+  border-color: #C1666B;
+}
+
+.is-open .Dropdown-arrow {
+  border-color: transparent transparent #000;
+  border-width: 0 5px 5px;
 }
 
 .btn-submit {
@@ -158,12 +175,12 @@ html, body {
   height: 35px;
   width: 50%;
   font-size: 13pt;
-  border: 4px ridge #BC8F8F;
-  background: rgba(224, 225, 221, 0.3);
+  border: 3px ridge #C1666B;
+  background: rgba(228, 223, 218, 0.3);
 }
 
 .btn-submit:hover {
-  background-color: #E0E1DD;
+  background-color: #E4DFDA;
 }
 
 .totals {
@@ -176,6 +193,44 @@ html, body {
 
 .num-correct {
   margin-left: 1rem;
+}
+
+.response span, .warning span {
+  padding: 1rem;
+  background: rgba(66, 129, 164, 0.7);
+  border: 2px solid #48A9A6;
+  border-radius: 6px;
+}
+
+.no-response, .no-warning {
+  display: none;
+}
+
+.response {
+  text-align: center;
+  font-size: 175%;
+}
+
+.nextButton {
+  padding: 1px;
+}
+
+.btn-next {
+  margin: 2rem auto;
+  height: 35px;
+  font-size: 13pt;
+  border: 3px ridge #C1666B;
+  background: rgba(72, 169, 166, 0.65);
+}
+
+.btn-next:hover {
+  background-color: #E4DFDA;
+}
+
+.warning {
+  text-align: center;
+  font-size: 200%;
+  color: #D10A32;
 }
 
 @media (max-width: 1680px) {
