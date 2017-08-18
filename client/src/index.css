@@ -195,21 +195,42 @@ html, body {
   margin-left: 1rem;
 }
 
-.warning {
-  text-align: center;
-  font-size: 200%;
-  color: red;
-}
-
-.warning span {
+.response span, .warning span {
   padding: 1rem;
   background: rgba(119, 141, 169, 0.8);
   border: 1px solid #778DA9;
   border-radius: 6px;
 }
 
-.no-warning {
+.no-response, .no-warning {
   display: none;
+}
+
+.response {
+  text-align: center;
+  font-size: 175%;
+}
+
+.nextButton {
+  padding: 1px;
+}
+
+.btn-next {
+  margin: 2rem auto;
+  height: 35px;
+  font-size: 13pt;
+  border: 4px ridge #778DA9;
+  background: rgba(224, 225, 221, .4);
+}
+
+.btn-next:hover {
+  background: rgba(119, 141, 169, 0.8);
+}
+
+.warning {
+  text-align: center;
+  font-size: 200%;
+  color: #D10A32;
 }
 
 @media (max-width: 1680px) {

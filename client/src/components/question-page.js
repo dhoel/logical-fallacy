@@ -2,14 +2,29 @@ import React from 'react';
 import * as actions from '../actions/actions-index';
 import {connect} from 'react-redux';
 import Dropdown from 'react-accessible-dropdown';
+import AnswerResponse from './answer-response';
 
 export class QuestionPage extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      hidden: true,
+      showWarning: false,
+      answerValue: 'Select an Answer'
     };
     this.onSubmit = this.onSubmit.bind(this);
+    this.onChange = this.onChange.bind(this);
+    this.hideWarning = this.hideWarning.bind(this);
+  }
+
+  onChange() {
+    setTimeout(this.hideWarning, 50);
+  }
+
+  hideWarning() {
+    this.setState({
+      answerValue: this.answer.state.selected.value,
+      showWarning: false
+    });
   }
 
   componentDidMount() {
@@ -18,21 +33,22 @@ export class QuestionPage extends React.Component {
 
   onSubmit(e) {
     e.preventDefault();
-    let answer = {
-        answer: this.answer.state.selected.value.toLowerCase()
-    };
-    if (answer.answer) {
-      this.setState({hidden: true});
+    if (this.answer.state.selected !== 'Select an Answer') {
+      let answer = {
+          answer: this.answer.state.selected.toLowerCase()
+      };
+      this.setState({answerValue: 'Select an Answer'});
       this.props.dispatch(actions.validateAnswer(answer));
     } else {
-      this.setState({hidden: false});
+      this.setState({showWarning: true});
     }
   }
 
   render() {
 
     const question = this.props.definition;
-    const hidden = this.state.hidden ? 'no-warning' : 'warning';
+    const showResponse = this.props.showResponse ? 'response' : 'no-response';
+    const showWarning = this.state.showWarning ? 'warning' : 'no-warning';
     const answerOptions = [
       'Appeal to Authority', 'Strawman', 'Ad Hominem', 'False Dilemma',
       'Appeal to Popularity', 'Red Herring'
@@ -52,10 +68,12 @@ export class QuestionPage extends React.Component {
           </div>
           <div className='submit-answer'>
             <form onSubmit={this.onSubmit}>
-              <Dropdown options={answerOptions} placeholder='Select an Answer'
-                ref={ref => this.answer = ref} />
-              <button type='submit'
-                className='btn btn-submit'>Submit</button>
+              <Dropdown options={answerOptions}
+                disabled={this.props.showResponse}
+                value={this.state.answerValue}
+                ref={ref => this.answer = ref} onChange={this.onChange}/>
+              <button type='submit' className='btn btn-submit'
+                disabled={this.props.showResponse}>Submit</button>
             </form>
           </div>
           <div className='totals'>
@@ -65,7 +83,10 @@ export class QuestionPage extends React.Component {
               >Correct Answers: {this.props.correctQs}</span>
           </div>
         </section>
-        <div className={hidden}>
+        <div className={showResponse}>
+          <AnswerResponse />
+        </div>
+        <div className={showWarning}>
           <span>Please select an answer</span>
         </div>
       </div>
@@ -78,6 +99,7 @@ const mapStateToProps = (state, props) => ({
   userName: state.userName,
   definition: state.definition,
   isCorrect: state.isCorrect,
+  showResponse: state.showResponse,
   totalQs: state.totalQs,
   correctQs: state.correctQs
 });
