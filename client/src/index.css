@@ -4,7 +4,7 @@
 }
 
 body {
-  background: #D4B483 url(./images/platos-academy.jpg)
+  background: #E3CFB0 url(./images/platos-academy.jpg)
     no-repeat center center fixed;
   -webkit-background-size: cover;
   -moz-background-size: cover;
@@ -58,9 +58,9 @@ html, body {
   height: 60px;
   width: 170px;
   margin: 4% auto;
-  border: 3px solid #778DA9;
+  border: 3px solid #4281A4;
   background-color: #0D160B;
-  color: #778DA9;
+  color: #4281A4;
 }
 
 .btn-login:hover {
@@ -92,7 +92,7 @@ html, body {
   height: 35px;
   width: 160px;
   margin-right: 30px;
-  border: 3px solid #333;
+  border: 3px solid #C1666B;
   font-size: 13pt;
   color: #333;
   background: rgba(228, 223, 218, 0.4);
@@ -220,11 +220,11 @@ html, body {
   height: 35px;
   font-size: 13pt;
   border: 3px ridge #C1666B;
-  background: rgba(228, 223, 218, .5);
+  background: rgba(72, 169, 166, 0.7);
 }
 
 .btn-next:hover {
-  background: rgba(72, 169, 166, 0.8);
+  background-color: #E4DFDA;
 }
 
 .warning {
