@@ -1,3 +1,21 @@
+.fade-enter {
+  opacity: 0;
+}
+
+.fade-enter-active {
+  opacity: 1;
+  transition: opacity 200ms ease-in;
+}
+
+.fade-leave {
+  opacity: 1;
+}
+
+.fade-leave-active {
+  opacity: 0;
+  transition: opacity 200ms ease-in;
+}
+
 * {
   box-sizing: border-box;
   margin: 0;
@@ -45,7 +63,7 @@ html, body {
 }
 
 .btn {
-  border-radius: 7px;
+  border-radius: 5px;
   font-weight: bold;
   text-decoration: none;
   cursor: default;
@@ -64,7 +82,7 @@ html, body {
 }
 
 .btn-login:hover {
-  border: 4px solid #E0E1DD;
+  border-color: #E0E1DD;
 }
 
 .topnav {
@@ -131,7 +149,7 @@ html, body {
   font-size: 15pt;
   text-align: center;
   border: 3px ridge #C1666B;
-  border-radius: 3px;
+  border-radius: 5px;
   background: rgba(228, 223, 218, 0.3);
 }
 
@@ -152,7 +170,7 @@ html, body {
 
 .is-open .Dropdown-control {
   border-style: ridge;
-  border-radius: 3px 3px 0 0;
+  border-radius: 5px 5px 0 0;
   border-width: 3px 3px 0;
   border-color: #C1666B;
   border-bottom: 1px solid black;
@@ -160,7 +178,7 @@ html, body {
 
 .is-open .Dropdown-menu {
   border-style: ridge;
-  border-radius: 0 0 3px 3px;
+  border-radius: 0 0 5px 5px;
   border-width: 0 3px 3px;
   border-color: #C1666B;
 }

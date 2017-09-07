@@ -1,6 +1,6 @@
 import React from 'react';
 import * as actions from '../actions/actions-index';
-import {connect} from 'react-redux';
+import { connect } from 'react-redux';
 import CorrectYes from './correct-yes';
 import CorrectNo from './correct-no';
 
@@ -14,7 +14,7 @@ if (props.isCorrect) {
   response = <CorrectNo />;
 };
 
-function onClick(e) {
+function handleClick(e) {
   props.dispatch(actions.fetchQuestion());
 }
 
@@ -24,7 +24,7 @@ function onClick(e) {
           {response}
         </div>
         <div className='nextButton'>
-          <button className='btn btn-next' type='button' onClick={onClick}
+          <button className='btn btn-next' type='button' onClick={handleClick}
             >Next Question</button>
         </div>
       </div>

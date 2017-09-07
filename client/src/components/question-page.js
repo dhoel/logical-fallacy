@@ -3,6 +3,7 @@ import * as actions from '../actions/actions-index';
 import {connect} from 'react-redux';
 import Dropdown from 'react-accessible-dropdown';
 import AnswerResponse from './answer-response';
+import { CSSTransitionGroup } from 'react-transition-group';
 
 export class QuestionPage extends React.Component {
   constructor(props) {
@@ -11,13 +12,6 @@ export class QuestionPage extends React.Component {
       showWarning: false,
       answerValue: 'Select an Answer'
     };
-    this.onSubmit = this.onSubmit.bind(this);
-    this.onChange = this.onChange.bind(this);
-    this.hideWarning = this.hideWarning.bind(this);
-  }
-
-  onChange() {
-    setTimeout(this.hideWarning, 50);
   }
 
   hideWarning() {
@@ -33,11 +27,12 @@ export class QuestionPage extends React.Component {
 
   onSubmit(e) {
     e.preventDefault();
-    if (this.answer.state.selected !== 'Select an Answer') {
-      let answer = {
+    const answerValue = 'Select an Answer';
+    if (this.answer.state.selected !== answerValue) {
+      const answer = {
           answer: this.answer.state.selected.toLowerCase()
       };
-      this.setState({answerValue: 'Select an Answer'});
+      this.setState({answerValue: answerValue});
       this.props.dispatch(actions.validateAnswer(answer));
     } else {
       this.setState({showWarning: true});
@@ -46,9 +41,13 @@ export class QuestionPage extends React.Component {
 
   render() {
 
+    const transitionOptions = {
+      transitionName: 'fade',
+      transitionEnterTimeout: 200,
+      transitionLeaveTimeout: 200
+    };
+    
     const question = this.props.definition;
-    const showResponse = this.props.showResponse ? 'response' : 'no-response';
-    const showWarning = this.state.showWarning ? 'warning' : 'no-warning';
     const answerOptions = [
       'Appeal to Authority', 'Strawman', 'Ad Hominem', 'False Dilemma',
       'Appeal to Popularity', 'Red Herring'
@@ -67,11 +66,10 @@ export class QuestionPage extends React.Component {
             {question}
           </div>
           <div className='submit-answer'>
-            <form onSubmit={this.onSubmit}>
-              <Dropdown options={answerOptions}
-                disabled={this.props.showResponse}
-                value={this.state.answerValue}
-                ref={ref => this.answer = ref} onChange={this.onChange}/>
+            <form onSubmit={this.onSubmit.bind(this)}>
+              <Dropdown options={answerOptions} disabled={this.props.showResponse}
+                value={this.state.answerValue} ref={ref => this.answer = ref}
+                onChange={() => setTimeout(this.hideWarning.bind(this), 50)} />
               <button type='submit' className='btn btn-submit'
                 disabled={this.props.showResponse}>Submit</button>
             </form>
@@ -83,12 +81,19 @@ export class QuestionPage extends React.Component {
               >Correct Answers: {this.props.correctQs}</span>
           </div>
         </section>
-        <div className={showResponse}>
-          <AnswerResponse />
-        </div>
-        <div className={showWarning}>
-          <span>Please select an answer</span>
-        </div>
+        <CSSTransitionGroup {...transitionOptions}>
+          {this.props.showResponse ?
+            <div className='response'>
+              <AnswerResponse />
+            </div> : ''}
+        </CSSTransitionGroup>
+        <CSSTransitionGroup {...transitionOptions}>
+          {this.state.showWarning ?
+            <div className='warning'>
+              <span>Please select an answer</span>
+            </div> : '' }
+        </CSSTransitionGroup>
+
       </div>
 
     );
