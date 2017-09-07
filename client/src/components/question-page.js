@@ -10,7 +10,7 @@ export class QuestionPage extends React.Component {
     super(props);
     this.state = {
       showWarning: false,
-      answerValue: 'Select an Answer'
+      answerValue: this.props.selectAnswer
     };
   }
 
@@ -27,7 +27,7 @@ export class QuestionPage extends React.Component {
 
   onSubmit(e) {
     e.preventDefault();
-    const answerValue = 'Select an Answer';
+    const answerValue = this.props.selectAnswer;
     if (this.answer.state.selected !== answerValue) {
       const answer = {
           answer: this.answer.state.selected.toLowerCase()
@@ -46,7 +46,7 @@ export class QuestionPage extends React.Component {
       transitionEnterTimeout: 200,
       transitionLeaveTimeout: 200
     };
-    
+
     const question = this.props.definition;
     const answerOptions = [
       'Appeal to Authority', 'Strawman', 'Ad Hominem', 'False Dilemma',

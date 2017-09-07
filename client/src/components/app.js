@@ -14,7 +14,7 @@ export class App extends React.Component {
     if (!this.props.userName) {
       return <LoginPage />;
     } else {
-      return <QuestionPage />;
+      return <QuestionPage selectAnswer={'Select an Answer'}/>;
     }
   };
 };
