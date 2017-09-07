@@ -24,6 +24,13 @@ export const fetchQuestionFailure = error => ({
   question: error
 });
 
+export const FETCH_ANSWERS_SUCCESS = 'FETCH_ANSWERS_SUCCESS';
+export const fetchAnswersSuccess = data => ({
+  type: FETCH_ANSWERS_SUCCESS,
+  answers: data
+});
+
+
 export const VALIDATE_ANSWER_SUCCESS = 'VALIDATE_ANSWER_SUCCESS';
 export const validateAnswerSuccess = data => ({
   type: VALIDATE_ANSWER_SUCCESS,
@@ -56,15 +63,15 @@ export const validateUser = () => dispatch => {
 
 export const fetchQuestion = () => dispatch => {
   const accessToken = Cookies.get('accessToken');
-  fetch('/api/fetch-questions', {
+  fetch('/api/fetch-question', {
     headers: {
         'Authorization': `Bearer ${accessToken}`
     }
-      }).then(res => {
-          if (!res.ok) {
-              throw new Error(res.statusText);
-          }
-          return res.json();
+  }).then(res => {
+      if (!res.ok) {
+          throw new Error(res.statusText);
+      }
+      return res.json();
   })
   .then(question => {
     dispatch(fetchQuestionSuccess(question));
@@ -74,9 +81,28 @@ export const fetchQuestion = () => dispatch => {
   });
 };
 
+export const fetchAnswers = () => dispatch => {
+  const accessToken = Cookies.get('accessToken');
+  fetch('/api/fetch-answers', {
+    headers: {
+        'Authorization': `Bearer ${accessToken}`
+    }
+  })
+  .then(res => {
+    if (!res.ok) {
+      throw new Error(res.statusText);
+    }
+    return res.json();
+  })
+  .then(answers => {
+    dispatch(fetchAnswersSuccess(answers));
+
+  });
+};
+
 export const validateAnswer = (answer) => dispatch => {
   const accessToken = Cookies.get('accessToken');
-  fetch('/api/check-answers', {
+  fetch('/api/check-answer', {
     headers: {
       'Authorization': `Bearer ${accessToken}`,
       'Content-Type': 'application/json'

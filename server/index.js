@@ -107,7 +107,7 @@ app.get('/api/me',
   }
 );
 
-app.get('/api/fetch-questions',
+app.get('/api/fetch-question',
   passport.authenticate('bearer', { session: false }),
   (req, res) => {
     User
@@ -124,7 +124,24 @@ app.get('/api/fetch-questions',
   }
 );
 
-app.put('/api/check-answers', jsonParser,
+app.get('/api/fetch-answers',
+  passport.authenticate('bearer', { session: false }),
+  (req, res) => {
+    User
+      .findOne({ googleId: req.user.googleId })
+      .then((user) => {
+        res.status(201).json(user.questions.map(question => {
+          return question.fallacy;
+        }));
+      })
+      .catch((err) => {
+        res.status(500).json({ message: 'Internal server error' });
+        console.error(err);
+      });
+  }
+);
+
+app.put('/api/check-answer', jsonParser,
     passport.authenticate('bearer', { session: false }),
     (req, res) => {
       let isCorrect = false;
@@ -133,10 +150,10 @@ app.put('/api/check-answers', jsonParser,
         .then((user) => {
           if (user.questions[0].fallacy !== req.body.answer) {
             const temp = user.questions[0].m;
-            user.questions[0].m = user.questions[1].m
-            user.questions[1].m = temp
+            user.questions[0].m = user.questions[1].m;
+            user.questions[1].m = temp;
           } else {
-            user.questions[0].m = user.questions.length + 1
+            user.questions[0].m = user.questions.length + 1;
             user.questions.forEach(e => { e.m -= 1; });
             isCorrect = true;
           }

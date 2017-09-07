@@ -2,12 +2,12 @@ import * as actions from '../actions/actions-index';
 
 const initialState = {
     userName: null,
-    definition: '',
+    question: '',
+    answers: [],
     isCorrect: false,
     totalQs: 0,
     showResponse: false,
     correctQs: 0
-
 };
 
 export const qReducer = (state=initialState, action) => {
@@ -16,7 +16,10 @@ export const qReducer = (state=initialState, action) => {
       return {...state, userName: action.currentUser};
     }
     if (action.type === actions.FETCH_QUESTION_SUCCESS) {
-      return {...state, definition: action.question, showResponse: false};
+      return {...state, question: action.question, showResponse: false};
+    }
+    if (action.type === actions.FETCH_ANSWERS_SUCCESS) {
+      return {...state, answers: action.answers};
     }
     if (action.type === actions.VALIDATE_ANSWER_SUCCESS) {
       if (action.isCorrect) {

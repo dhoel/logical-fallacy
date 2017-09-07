@@ -23,17 +23,18 @@ export class QuestionPage extends React.Component {
 
   componentDidMount() {
     this.props.dispatch(actions.fetchQuestion());
+    this.props.dispatch(actions.fetchAnswers());
   }
 
   onSubmit(e) {
     e.preventDefault();
-    const answerValue = this.props.selectAnswer;
-    if (this.answer.state.selected !== answerValue) {
+    const selectAnswer = this.props.selectAnswer;
+    if (this.answer.state.selected !== selectAnswer) {
       const answer = {
           answer: this.answer.state.selected.toLowerCase()
       };
-      this.setState({answerValue: answerValue});
       this.props.dispatch(actions.validateAnswer(answer));
+      this.setState({answerValue: selectAnswer});
     } else {
       this.setState({showWarning: true});
     }
@@ -47,11 +48,8 @@ export class QuestionPage extends React.Component {
       transitionLeaveTimeout: 200
     };
 
-    const question = this.props.definition;
-    const answerOptions = [
-      'Appeal to Authority', 'Strawman', 'Ad Hominem', 'False Dilemma',
-      'Appeal to Popularity', 'Red Herring'
-    ];
+    const question = this.props.question;
+    const answerOptions = this.props.answers;
 
     return (
       <div className='question-page'>
@@ -102,7 +100,8 @@ export class QuestionPage extends React.Component {
 
 const mapStateToProps = (state, props) => ({
   userName: state.userName,
-  definition: state.definition,
+  question: state.question,
+  answers: state.answers,
   isCorrect: state.isCorrect,
   showResponse: state.showResponse,
   totalQs: state.totalQs,
