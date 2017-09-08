@@ -153,6 +153,10 @@ html, body {
   background: rgba(228, 223, 218, 0.3);
 }
 
+.Dropdown-menu {
+  font-size: 12pt;
+}
+
 .Dropdown-arrow {
   border-color: #000 transparent transparent;
   border-style: solid;

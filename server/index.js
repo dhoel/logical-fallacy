@@ -131,7 +131,7 @@ app.get('/api/fetch-answers',
       .findOne({ googleId: req.user.googleId })
       .then((user) => {
         res.status(201).json(user.questions.map(question => {
-          return question.fallacy;
+          return question.fallacy.toUpperCase();
         }));
       })
       .catch((err) => {
